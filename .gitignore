@@ -1,7 +1,8 @@
 autom4te.cache
-build
+build*
 config.log
 config.status
 Makefile
 .DS_Store
 !/regression/Makefile
+*.tmp
