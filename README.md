@@ -48,29 +48,31 @@ complete the process.
 
 ### Installation (Newlib)
 
-To build the Newlib cross-compiler, pick an install path (that is writeable).
+To build the Newlib cross-compiler targeting for Anycore system, pick an install path (that is writeable).
 If you choose, say, `/opt/riscv`, then add `/opt/riscv/bin` to your `PATH`.
 Then, simply run the following command:
 
-    ./configure --prefix=/opt/riscv
-    make
+    mkdir build-newlib
+    cd build-newlib
+    INSTALL="$(readlink -f <YOUR_INSTALL_PATH>)"
+    ../configure --prefix="${INSTALL}" --enable-debug-info --disable-linux --disable-gdb --disable-multilib --disable-qemu-system --with-arch=rv64imafd --with-abi=lp64d
+    make newlib -j"$(nproc)"
 
 You should now be able to use riscv64-unknown-elf-gcc and its cousins.
 
 ### Installation (Linux)
 
-To build the Linux cross-compiler, pick an install path (that is writeable).
+To build the Linux glibc-based cross-compiler targeting for Anycore system, pick an install path (that is writeable).
 If you choose, say, `/opt/riscv`, then add `/opt/riscv/bin` to your `PATH`.
 Then, simply run the following command:
 
-    ./configure --prefix=/opt/riscv
-    make linux
+    mkdir build-linux
+    cd build-linux
+    INSTALL="$(readlink -f <YOUR_INSTALL_PATH>)"
+    ../configure --prefix="${INSTALL}" --enable-debug-info --enable-linux --disable-gdb --disable-multilib --disable-qemu-system --with-arch=rv64imafd --with-abi=lp64d
+    make linux -j$(nproc)
 
-The build defaults to targeting RV64GC (64-bit) with glibc, even on a 32-bit
-build environment. To build the 32-bit RV32GC toolchain, use:
-
-    ./configure --prefix=/opt/riscv --with-arch=rv32gc --with-abi=ilp32d
-    make linux
+If you want to build LLVM clang along with GCC, add `--enable-llvm` flag to the `configure` command.
 
 In case you prefer musl libc over glibc, configure just like above and opt for
 `make musl` instead of `make linux`.
