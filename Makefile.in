@@ -462,6 +462,7 @@ stamps/build-gcc-linux-stage2: $(GCC_SRCDIR) $(GCC_SRC_GIT) $(addprefix stamps/b
 		--with-pkgversion="$(GCCPKGVER)" \
 		@with_system_zlib@ \
 		--enable-shared \
+		--disable-threads \
 		--enable-tls \
 		--enable-languages=c,c++,fortran \
 		--disable-libmudflap \
@@ -834,6 +835,7 @@ stamps/build-gcc-musl-stage2: $(GCC_SRCDIR) $(GCC_SRC_GIT) stamps/build-musl-lin
 		--with-sysroot=$(SYSROOT) \
 		@with_system_zlib@ \
 		--enable-shared \
+		--disable-threads \
 		--enable-tls \
 		--enable-languages=c,c++ \
 		--disable-libmudflap \
@@ -937,6 +939,7 @@ stamps/build-llvm-linux: $(LLVM_SRCDIR) $(LLVM_SRC_GIT) \
 	    -DDEFAULT_SYSROOT="../sysroot" \
 	    -DLLVM_RUNTIME_TARGETS=$(call make_tuple,$(XLEN),linux-gnu) \
 	    -DLLVM_INSTALL_TOOLCHAIN_ONLY=On \
+	    -DLLVM_ENABLE_THREADS=Off \
 	    -DLLVM_PARALLEL_LINK_JOBS=4
 	$(MAKE) -C $(notdir $@)
 	$(MAKE) -C $(notdir $@) install
@@ -955,6 +958,7 @@ stamps/build-llvm-newlib: $(LLVM_SRCDIR) $(LLVM_SRC_GIT) stamps/build-gcc-newlib
 	    -DLLVM_ENABLE_PROJECTS="clang;lld" \
 	    -DLLVM_DEFAULT_TARGET_TRIPLE="$(NEWLIB_TUPLE)" \
 	    -DLLVM_INSTALL_TOOLCHAIN_ONLY=On \
+	    -DLLVM_ENABLE_THREADS=Off \
 	    -DLLVM_PARALLEL_LINK_JOBS=4
 	$(MAKE) -C $(notdir $@)
 	$(MAKE) -C $(notdir $@) install
