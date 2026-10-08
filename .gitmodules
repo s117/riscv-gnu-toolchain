@@ -1,7 +1,7 @@
 [submodule "binutils"]
 	path = binutils
-	url = https://github.com/gnutools/binutils-gdb.git
-	branch = binutils-2_47-branch
+	url = https://github.com/s117/riscv-binutils-gdb.git
+	branch = riscv-binutils-2.47-anycore
 	shallow = true
 [submodule "gcc"]
 	path = gcc
@@ -10,7 +10,8 @@
 	shallow = true
 [submodule "glibc"]
 	path = glibc
-	url = https://github.com/gnutools/glibc.git
+	url = https://github.com/s117/riscv-glibc.git
+	branch = riscv-glibc-2.44-anycore
 	shallow = true
 [submodule "dejagnu"]
 	path = dejagnu
@@ -19,31 +20,12 @@
 	shallow = true
 [submodule "newlib"]
 	path = newlib
-	url = https://github.com/cygwin/cygwin.git
-	branch = master
-	shallow = true
-[submodule "gdb"]
-	path = gdb
-	url = https://github.com/gnutools/binutils-gdb.git
-	branch = gdb-17-branch
-	shallow = true
-[submodule "qemu"]
-	path = qemu
-	url = https://gitlab.com/qemu-project/qemu.git
+	url = https://github.com/s117/riscv-newlib.git
+	branch = riscv-newlib-4.6.0-anycore
 	shallow = true
 [submodule "musl"]
 	path = musl
 	url = https://github.com/kraj/musl.git
-	branch = master
-	shallow = true
-[submodule "spike"]
-	path = spike
-	url = https://github.com/riscv-software-src/riscv-isa-sim.git
-	branch = master
-	shallow = true
-[submodule "pk"]
-	path = pk
-	url = https://github.com/riscv-software-src/riscv-pk.git
 	branch = master
 	shallow = true
 [submodule "llvm"]
