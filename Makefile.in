@@ -253,7 +253,8 @@ NEWLIB_CC_FOR_MULTILIB_INFO := $(NEWLIB_CC_FOR_TARGET)
 
 PICOLIBC_TARGET_FLAGS := $(PICOLIBC_TARGET_FLAGS_EXTRA)
 
-GLIBC_TARGET_FLAGS := $(GLIBC_TARGET_FLAGS_EXTRA)
+# Anycore: PK provides no riscv_hwprobe (no IFUNC dispatch), use the generic routines
+GLIBC_TARGET_FLAGS := --disable-multi-arch $(GLIBC_TARGET_FLAGS_EXTRA)
 GLIBC_CC_FOR_TARGET ?= $(LINUX_TUPLE)-gcc
 GLIBC_CXX_FOR_TARGET ?= $(LINUX_TUPLE)-g++
 GLIBC_TARGET_BOARDS ?= $(shell $(srcdir)/scripts/generate_target_board \
@@ -678,6 +679,7 @@ stamps/build-gcc-linux-stage2: $(GCC_SRCDIR) $(GCC_SRC_GIT) $(addprefix stamps/b
 		--with-pkgversion="$(GCCPKGVER)" \
 		@with_system_zlib@ \
 		--enable-shared \
+		--disable-threads \
 		--enable-tls \
 		--enable-languages=$(ENABLED_LANGUAGES) \
 		--disable-libmudflap \
