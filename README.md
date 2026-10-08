@@ -5,6 +5,42 @@ This is the RISC-V C and C++ cross-compiler. It can build a bare-metal
 ELF toolchain (using Newlib or Picolibc) or a Linux-ELF toolchain
 (using glibc, musl, or uClibc).
 
+### Building for the Anycore system
+
+This branch targets the Anycore system: an RV64IMAFD core implementing the
+old RISC-V ISA (user v2.0, supervisor v1.0), running statically-linked glibc
+programs on top of the proxy kernel (PK). It differs from upstream in:
+
+- binutils (`riscv-binutils-2.47-anycore`): 8 KiB page size, the legacy
+  supervisor CSRs (`status`, `evec`, `epc`, ...) and the old `sret` encoding
+  (`sret.old`).
+- glibc (`riscv-glibc-2.44-anycore`): malloc never uses mmap, which would
+  clamp the brk in PK. glibc is built with `--disable-multi-arch`.
+- newlib (`riscv-newlib-4.6.0-anycore`): no 2GB limit on a single malloc.
+- GCC is built with `--disable-threads`, as PK is single-threaded.
+
+The toolchain is normally built by `builder.sh` in the anycore-riscv
+repository. To build it by hand, pick an install path (that is writeable)
+and run:
+
+    mkdir build-newlib
+    cd build-newlib
+    INSTALL="$(readlink -f <YOUR_INSTALL_PATH>)"
+    ../configure --prefix="${INSTALL}" --enable-debug-info --disable-linux --disable-gdb --disable-multilib --disable-qemu-system --with-arch=rv64imafd --with-abi=lp64d
+    make newlib -j"$(nproc)"
+
+for the Newlib toolchain, or:
+
+    mkdir build-linux
+    cd build-linux
+    INSTALL="$(readlink -f <YOUR_INSTALL_PATH>)"
+    ../configure --prefix="${INSTALL}" --enable-debug-info --enable-linux --enable-llvm --disable-gdb --disable-multilib --disable-qemu-system --with-arch=rv64imafd --with-abi=lp64d
+    make linux -j"$(nproc)"
+
+for the Linux (glibc) toolchain with LLVM/clang. Drop `--enable-llvm` to
+build GCC only. Anycore does not implement the C extension, so never build
+for (or compile programs with) `rv64gc`.
+
 ###  Getting the sources
 
 This repository uses submodules, but submodules will fetch automatically on demand,
