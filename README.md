@@ -17,8 +17,10 @@ programs on top of the proxy kernel (PK). It differs from upstream in:
 - glibc (`riscv-glibc-2.44-anycore`): malloc never uses mmap, which would
   clamp the brk in PK. glibc is built with `--disable-multi-arch`.
 - newlib (`riscv-newlib-4.6.0-anycore`): no 2GB limit on a single malloc.
-- GCC is built with `--disable-threads`, as PK is single-threaded, and
-  OpenMP is disabled in both GCC (no libgomp) and LLVM (no libomp).
+- GCC is built with `--enable-threads=posix`, so libstdc++ has `std::mutex`
+  and friends. PK is single-threaded and cannot create threads, but its
+  `futex` serves the single-thread case, so programs that only take locks
+  run. OpenMP is disabled in both GCC (no libgomp) and LLVM (no libomp).
 
 The toolchain is normally built by `builder.sh` in the anycore-riscv
 repository. To build it by hand, pick an install path (that is writeable)

@@ -679,7 +679,7 @@ stamps/build-gcc-linux-stage2: $(GCC_SRCDIR) $(GCC_SRC_GIT) $(addprefix stamps/b
 		--with-pkgversion="$(GCCPKGVER)" \
 		@with_system_zlib@ \
 		--enable-shared \
-		--disable-threads \
+		--enable-threads=posix \
 		--disable-libgomp \
 		--enable-tls \
 		--enable-languages=$(ENABLED_LANGUAGES) \
