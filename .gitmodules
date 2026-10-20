@@ -30,8 +30,8 @@
 	shallow = true
 [submodule "llvm"]
 	path = llvm
-	url = https://github.com/llvm/llvm-project.git
-	branch = release/20.x
+	url = https://github.com/s117/llvm-project.git
+	branch = anycore-gcc_16.1.0-llvm_22.1.8
 	shallow = true
 [submodule "uclibc-ng"]
 	path = uclibc-ng

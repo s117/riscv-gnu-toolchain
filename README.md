@@ -17,6 +17,9 @@ programs on top of the proxy kernel (PK). It differs from upstream in:
 - glibc (`riscv-glibc-2.44-anycore`): malloc never uses mmap, which would
   clamp the brk in PK. glibc is built with `--disable-multi-arch`.
 - newlib (`riscv-newlib-4.6.0-anycore`): no 2GB limit on a single malloc.
+- LLVM (`anycore-gcc_16.1.0-llvm_22.1.8`): flang accepts
+  `-fbasic-block-sections=labels`, as clang does, and emits the basic block
+  address map (`.llvm_bb_addr_map`).
 - GCC is built with `--enable-threads=posix`, so libstdc++ has `std::mutex`
   and friends. PK is single-threaded and cannot create threads, but its
   `futex` serves the single-thread case, so programs that only take locks
